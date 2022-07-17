@@ -8,7 +8,8 @@ import {
   SlInput,
 } from "@shoelace-style/shoelace/dist/react";
 import ResourceListTableItem from "./ResourceListTableItem";
-import useEconomicResources from "./hooks/useEconomicResources";
+import { useQuery } from "@apollo/client";
+import { LIST_ECONOMIC_RESOURCES } from "./graphql/queries";
 
 export type EconomicResourceListProps = {
   myAgentId: string;
@@ -17,7 +18,7 @@ export type EconomicResourceListProps = {
 const EconomicResourceList: React.FC<EconomicResourceListProps> = ({
   myAgentId,
 }) => {
-  const { data, loading, error } = useEconomicResources();
+  const { data, loading, error } = useQuery(LIST_ECONOMIC_RESOURCES);
   if (loading) return <div>Listing economic resources...</div>;
   if (error) return <p>ERROR</p>;
   if (!data) return <p>Not found</p>;
@@ -58,10 +59,10 @@ const EconomicResourceList: React.FC<EconomicResourceListProps> = ({
           {/* Measure */}
           <div>Measure</div>
         </div>
-        {data.map((resource: any) => (
+        {data.economicResources.edges.map((resource: any) => (
           <ResourceListTableItem
-            key={resource.id}
-            resource={resource}
+            key={resource.node.id}
+            resource={resource.node}
             myAgentId={myAgentId}
           />
         ))}

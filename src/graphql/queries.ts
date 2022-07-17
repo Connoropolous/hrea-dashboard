@@ -38,7 +38,7 @@ export const LIST_ECONOMIC_EVENTS = gql`
               hasNumericalValue
             }
             image
-            note
+            name
           }
         }
       }
@@ -52,6 +52,9 @@ export const LIST_ECONOMIC_RESOURCES = gql`
       edges {
         node {
           id
+          primaryAccountable {
+            id
+          }
           accountingQuantity {
             hasNumericalValue
           }
@@ -59,7 +62,7 @@ export const LIST_ECONOMIC_RESOURCES = gql`
             hasNumericalValue
           }
           image
-          note
+          name
         }
       }
     }

@@ -36,9 +36,7 @@ const CreateEconomicResource: React.FC<CreateEconomicResourceProps> = ({
           hasPointInTime: new Date(),
         },
         newInventoriedResource: {
-          // TODO: remove this hack
-          // once `name` exists
-          note: resourceName,
+          name: resourceName,
           image: image,
         },
       },

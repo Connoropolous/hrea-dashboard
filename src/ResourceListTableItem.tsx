@@ -64,15 +64,14 @@ const ResourceListTableItem: React.FC<ResourceListTableItemProps> = ({
 
       {/* Resource Name */}
       <div className="resource-list-resource-name">
-        {/* HACK: todo, fix once name is added */}
-        {resource.note}
+        {resource.name}
       </div>
 
       {/* Note */}
       {/* <div>{edge.node.conformsTo.note}</div> */}
 
       {/* Agent */}
-      <div>{resource.primaryAccountable.slice(0, 8)}...</div>
+      <div>{resource.primaryAccountable.id.slice(0, 8)}...</div>
 
       {/* Quantity */}
       <div>

@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import {
   SlButton,
   SlCard,
@@ -9,8 +9,7 @@ import {
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MainPanelHeader from "../components/MainPanelHeader";
-import { CREATE_ECONOMIC_EVENT } from "../graphql/queries";
-import useEconomicResources from "../hooks/useEconomicResources";
+import { CREATE_ECONOMIC_EVENT, LIST_ECONOMIC_RESOURCES } from "../graphql/queries";
 
 export type ResourceTransferProps = {
   myAgentId: string;
@@ -19,18 +18,17 @@ export type ResourceTransferProps = {
 const VALUE_SEPARATOR = "__SEPARATOR__";
 
 export type ResourceListProps = {
-  econResources: any[];
+  resources: any[];
 };
-const ResourceList: React.FC<ResourceListProps> = ({ econResources }) => {
+const ResourceList: React.FC<ResourceListProps> = ({ resources }) => {
   return (
     <>
-      {econResources.map((eR: any) => {
-        const value = `${eR.primaryAccountable}${VALUE_SEPARATOR}${eR.id}`;
+      {resources.map((eR: any) => {
+        const value = `${eR.node.primaryAccountable.id}${VALUE_SEPARATOR}${eR.node.id}`;
         return (
           <SlMenuItem key={value} value={value} className="resource-select-menu-item">
-            {/* TODO: fix this to name, when possible */}
-            {eR.note}
-            <div slot="suffix">{eR.accountingQuantity.hasNumericalValue}</div>
+            {eR.node.name}
+            <div slot="suffix">{eR.node.accountingQuantity.hasNumericalValue}</div>
           </SlMenuItem>
         );
       })}
@@ -41,7 +39,7 @@ const ResourceList: React.FC<ResourceListProps> = ({ econResources }) => {
 const ResourceTransfer: React.FC<ResourceTransferProps> = ({ myAgentId }) => {
   const navigate = useNavigate();
   const [createEE, createEEmutationStatus] = useMutation(CREATE_ECONOMIC_EVENT);
-  const econResources = useEconomicResources();
+  const resources = useQuery(LIST_ECONOMIC_RESOURCES);
 
   const [from, setFrom] = useState<string>("");
   const [to, setTo] = useState<string>("");
@@ -93,8 +91,8 @@ const ResourceTransfer: React.FC<ResourceTransferProps> = ({ myAgentId }) => {
 
       {/* The Form */}
       <SlCard className="create-resource">
-        {econResources.loading && <>Loading...</>}
-        {!econResources.loading && !econResources.error && (
+        {resources.loading && <>Loading...</>}
+        {!resources.loading && !resources.error && (
           <form onSubmit={handleSubmit}>
             <SlSelect
               // required
@@ -106,8 +104,8 @@ const ResourceTransfer: React.FC<ResourceTransferProps> = ({ myAgentId }) => {
                 setFrom(e.target.value);
               }}
             >
-              {econResources.data && (
-                <ResourceList econResources={econResources.data} />
+              {resources.data.economicResources.edges && (
+                <ResourceList resources={resources.data.economicResources.edges} />
               )}
             </SlSelect>
             <br />
@@ -117,8 +115,8 @@ const ResourceTransfer: React.FC<ResourceTransferProps> = ({ myAgentId }) => {
               // @ts-ignore
               onSlChange={(e) => setTo(e.target.value)}
             >
-              {econResources.data && (
-                <ResourceList econResources={econResources.data} />
+              {resources.data.economicResources.edges && (
+                <ResourceList resources={resources.data.economicResources.edges} />
               )}
             </SlSelect>
             <br />
