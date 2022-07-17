@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "REACT_APP_HC_APP_ID='hrea_suite' REACT_APP_HC_CONN_URL='ws://localhost:17191' BROWSER=none react-scripts start",
+    "start": "REACT_APP_HC_APP_ID='hrea_suite' REACT_APP_HC_CONN_URL='ws://localhost:4000' BROWSER=none react-scripts start",
     "build": "rimraf ui.zip && rimraf build && react-scripts build && cd ./build && bestzip ../ui.zip * ",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -26,11 +26,8 @@
   "dependencies": {
     "@apollo/client": "^3.5.7",
     "@shoelace-style/shoelace": "^2.0.0-beta.70",
-    "@valueflows/vf-graphql-holochain": "0.0.1-alpha.4",
-    "apollo-cache-inmemory": "^1.6.6",
-    "graphiql": "^1.5.16",
-    "graphiql-explorer": "0.6.3",
-    "graphql": "^15.8.0",
+    "@connoropolous/vf-graphql-holochain": "^0.0.1-alpha.4",
+    "graphql": "16.3.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-router-dom": "^6.2.2"

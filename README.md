@@ -1,6 +1,6 @@
-# HoloREA Network Dashboard
+# hREA Network Dashboard
 
-Make sure you're running a holo-rea `full_suite` happ.
+Make sure you're running an hREA `full_suite` happ.
 
 Double check that this value in package.json `scripts -> start` command is right, in terms of the port number for your AppWebsocket on the Holochain runtime:
 

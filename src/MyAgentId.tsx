@@ -25,6 +25,8 @@ const MyAgentId: React.FC<MyAgentIdProps> = ({ setMyAgentId }) => {
     setMyAgentId,
   ]);
 
+  console.log(myAgentRequest)
+
   if (myAgentRequest.loading) return <div>Checking my identity...</div>;
   if (myAgentRequest.error) return <p>ERROR checking my identity</p>;
 

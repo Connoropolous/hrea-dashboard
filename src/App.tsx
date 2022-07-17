@@ -10,7 +10,7 @@ import {
 } from "@apollo/client";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 
-import bindSchema, { autoConnect } from "@valueflows/vf-graphql-holochain";
+import bindSchema, { autoConnect } from "@connoropolous/vf-graphql-holochain";
 
 import "./App.css";
 import EconomicResourceList from "./EconomicResourceList";
