@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { CREATE_ECONOMIC_RESOURCES } from "./graphql/queries";
+import { CREATE_ECONOMIC_RESOURCES } from "../graphql/queries";
 import { SlButton, SlCard, SlInput } from "@shoelace-style/shoelace/dist/react";
 import { useNavigate } from "react-router-dom";
 
@@ -53,7 +53,7 @@ const CreateEconomicResource: React.FC<CreateEconomicResourceProps> = ({
   };
 
   return (
-    <SlCard className="create-resource">
+    <SlCard className="create-form">
       <form onSubmit={handleSubmit}>
         {/* make sure its a number, using + */}
         <br />

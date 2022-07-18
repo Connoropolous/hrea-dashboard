@@ -69,13 +69,22 @@ export const LIST_ECONOMIC_RESOURCES = gql`
   }
 `;
 
+export const LIST_AGENTS = gql`
+  query ListAgents {
+    agents {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
 export const CREATE_ECONOMIC_EVENT = gql`
-  mutation CreateEconomicResource(
-    $event: EconomicEventCreateParams!
-  ) {
-    createEconomicEvent(
-      event: $event
-    ) {
+  mutation CreateEconomicResource($event: EconomicEventCreateParams!) {
+    createEconomicEvent(event: $event) {
       economicEvent {
         id
       }
@@ -131,9 +140,7 @@ export const CREATE_RESOURCE_SPECIFICATION = gql`
 `;
 
 export const CREATE_UNIT = gql`
-  mutation CreateUnit(
-    $unit: UnitCreateParams!
-  ) {
+  mutation CreateUnit($unit: UnitCreateParams!) {
     createUnit(unit: $unit) {
       unit {
         id
@@ -141,5 +148,22 @@ export const CREATE_UNIT = gql`
         label
       }
     }
+  }
+`;
+
+export const CREATE_PERSON = gql`
+  mutation CreatePerson($person: AgentCreateParams!) {
+    createPerson(person: $person) {
+      agent {
+        id
+        name
+      }
+    }
+  }
+`;
+
+export const ASSOCIATE_MY_AGENT = gql`
+  mutation AssociateMyAgent($id: ID!) {
+    associateMyAgent(agentId: $id)
   }
 `;

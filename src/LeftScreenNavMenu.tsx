@@ -18,10 +18,12 @@ const LeftScreenNavMenu: React.FC<LeftScreenNavMenuProps> = ({}) => {
             Resources
           </SlMenuItem>
         </Link>
-        <SlMenuItem value="Agents" disabled>
-          Agents
-          <SlIcon slot="prefix" name="people" />
-        </SlMenuItem>
+        <Link to="/agents">
+          <SlMenuItem value="Agents">
+            Agents
+            <SlIcon slot="prefix" name="people" />
+          </SlMenuItem>
+        </Link>
       </SlMenu>
     </div>
   );

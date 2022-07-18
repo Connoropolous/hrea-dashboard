@@ -8,21 +8,19 @@ import {
   InMemoryCache,
   NormalizedCacheObject,
 } from "@apollo/client";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import bindSchema, { autoConnect } from "@connoropolous/vf-graphql-holochain";
 
 import "./App.css";
-import EconomicResourceList from "./EconomicResourceList";
-import CreateEconomicResource from "./CreateEconomicResource";
 import Header from "./Header";
 import LeftScreenNavMenu from "./LeftScreenNavMenu";
-import { SlButton } from "@shoelace-style/shoelace/dist/react";
-import { WHO_AM_I } from "./graphql/queries";
 import MyAgentId from "./MyAgentId";
 import Resources from "./routes/Resources";
 import NewResource from "./routes/NewResource";
 import ResourceTransfer from "./routes/ResourceTransfer";
+import Agents from "./routes/Agents";
+import RegisterOtherAgent from "./routes/RegisterOtherAgent";
 
 setBasePath(
   "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.70/dist/"
@@ -31,7 +29,7 @@ setBasePath(
 interface Props {}
 
 const App: React.FC<Props> = () => {
-  const [myAgentId, setMyAgentId] = useState<string>();
+  const [myAgentId, setMyAgentId] = useState<string>("");
   const [schema, setSchema] = useState();
   const [link, setLink] = useState();
   const [client, setClient] = useState<ApolloClient<NormalizedCacheObject>>();
@@ -63,41 +61,42 @@ const App: React.FC<Props> = () => {
     return <div>Making websocket connection...</div>;
   }
 
-  if (!myAgentId) {
-    return (
-      <ApolloProvider client={client}>
-        <MyAgentId setMyAgentId={setMyAgentId} />
-      </ApolloProvider>
-    );
-  }
-
   return (
     <BrowserRouter>
-      <ApolloProvider client={client}>
-        <div className="container">
-          <Header name={myAgentId} />
-          <div className="below-header">
-            <LeftScreenNavMenu />
+      <div className="container">
+        <Header name={myAgentId} />
+        <div className="below-header">
+          <LeftScreenNavMenu />
 
-            <div className="main-panel">
-                <Routes>
-                  <Route
-                    path="/resources"
-                    element={<Resources myAgentId={myAgentId} />}
-                  />
-                  <Route
-                    path="/resources/transfer"
-                    element={<ResourceTransfer myAgentId={myAgentId} />}
-                  />
-                  <Route
-                    path="/resources/new"
-                    element={<NewResource myAgentId={myAgentId} />}
-                  />
-                </Routes>
-            </div>
+          <div className="main-panel">
+            <ApolloProvider client={client}>
+              {!myAgentId && <MyAgentId setMyAgentId={setMyAgentId} />}
+              <Routes>
+                <Route
+                  path="/resources"
+                  element={<Resources myAgentId={myAgentId} />}
+                />
+                <Route
+                  path="/resources/transfer"
+                  element={<ResourceTransfer myAgentId={myAgentId} />}
+                />
+                <Route
+                  path="/resources/new"
+                  element={<NewResource myAgentId={myAgentId} />}
+                />
+                <Route
+                  path="/agents"
+                  element={<Agents myAgentId={myAgentId} />}
+                />
+                <Route
+                  path="/agents/register_other"
+                  element={<RegisterOtherAgent />}
+                />
+              </Routes>
+            </ApolloProvider>
           </div>
         </div>
-      </ApolloProvider>
+      </div>
     </BrowserRouter>
   );
 };

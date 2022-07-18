@@ -1,7 +1,7 @@
 import React from "react";
 import { SlButton } from "@shoelace-style/shoelace/dist/react";
 import { Link } from "react-router-dom";
-import CreateEconomicResource from "../CreateEconomicResource";
+import CreateEconomicResource from "../components/CreateEconomicResource";
 import MainPanelHeader from "../components/MainPanelHeader";
 
 export type NewResourceProps = {

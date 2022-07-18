@@ -1,7 +1,7 @@
 import React from "react";
 import { SlButton } from "@shoelace-style/shoelace/dist/react";
 import { Link } from "react-router-dom";
-import EconomicResourceList from "../components/EconomicResourceList";
+import AgentList from "../components/AgentList";
 import MainPanelHeader from "../components/MainPanelHeader";
 
 export type ResourcesProps = {
@@ -12,18 +12,14 @@ const Resources: React.FC<ResourcesProps> = ({ myAgentId }) => {
   return (
     <>
       <MainPanelHeader>
-        <h2>Resources</h2>
+        <h2>Agents</h2>
         <div>
-          <Link to="/resources/transfer">
-            <SlButton variant="primary">Transfer</SlButton>
-          </Link>
-          {' '}
-          <Link to="/resources/new">
-            <SlButton variant="primary">Add Resource</SlButton>
+          <Link to="/agents/register_other">
+            <SlButton variant="primary">Register An Agent</SlButton>
           </Link>
         </div>
       </MainPanelHeader>
-      <EconomicResourceList myAgentId={myAgentId} />
+      <AgentList myAgentId={myAgentId} />
     </>
   );
 };

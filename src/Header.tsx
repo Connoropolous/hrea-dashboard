@@ -1,15 +1,11 @@
 import React from "react";
-import {
-  SlInput,
-  SlAvatar,
-  SlIcon,
-} from "@shoelace-style/shoelace/dist/react";
+import { SlInput, SlAvatar, SlIcon } from "@shoelace-style/shoelace/dist/react";
 
 export type HeaderProps = {
-  name: string
+  name: string;
 };
 
-const Header: React.FC<HeaderProps> = ({name}) => {
+const Header: React.FC<HeaderProps> = ({ name }) => {
   return (
     <div className="header">
       <SlAvatar
@@ -23,9 +19,8 @@ const Header: React.FC<HeaderProps> = ({name}) => {
       </div>
 
       <div>
-        <SlAvatar shape="circle" label="Circle avatar" />
-        {" "}
-        {name.slice(0, 8)}...
+        <SlAvatar shape="circle" label="Circle avatar" />{" "}
+        {name ? name.slice(0, 8) + "..." : ""}
       </div>
     </div>
   );

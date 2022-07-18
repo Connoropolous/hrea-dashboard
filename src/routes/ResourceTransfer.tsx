@@ -90,7 +90,7 @@ const ResourceTransfer: React.FC<ResourceTransferProps> = ({ myAgentId }) => {
       </MainPanelHeader>
 
       {/* The Form */}
-      <SlCard className="create-resource">
+      <SlCard className="create-form">
         {resources.loading && <>Loading...</>}
         {!resources.loading && !resources.error && (
           <form onSubmit={handleSubmit}>
