@@ -10,6 +10,7 @@ const NewAgent: React.FC<NewAgentProps> = ({}) => {
   const navigate = useNavigate();
   const onCreated = (id: string) => {
     navigate("/agents");
+    window.location.reload();
   };
   return (
     <>

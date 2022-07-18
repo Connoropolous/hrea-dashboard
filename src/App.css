@@ -120,7 +120,7 @@
 /* quantity */
 .resource-list-table-header > div:nth-child(5),
 .resource-list-table-item > div:nth-child(5) {
-  width: 15%;
+  flex: 1;
 }
 .resource-list-table-item > div:nth-child(5) {
   display: flex;
@@ -129,7 +129,7 @@
 }
 
 .resource-list-resource-quantity {
-  width: 60px;
+  
   margin-right: var(--sl-spacing-small);
 }
 
