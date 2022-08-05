@@ -20,24 +20,26 @@ setBasePath(
   'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.70/dist/'
 )
 
+
 interface Props {}
 
 const App: React.FC<Props> = () => {
   const [myAgentId, setMyAgentId] = useState<string>('')
-  const [schema, setSchema] = useState()
-  const [link, setLink] = useState()
   const [client, setClient] = useState()
 
   const connect = async () => {
-    // @ts-ignore
-    const client = await graphqlClientHolochain({})
+    try {
+      const client = await graphqlClientHolochain({
+        conductorUri: 'ws://localhost:4000',
 
-    // @ts-ignore
-    setSchema(schema)
-    // @ts-ignore
-    setLink(link)
-    // @ts-ignore
-    setClient(client)
+        // @ts-ignore
+        dnaConfig: undefined
+      })
+      // @ts-ignore
+      setClient(client)
+    } catch (e) {
+      console.error('ee', e)
+    }
   }
 
   useEffect(() => {
