@@ -5,7 +5,7 @@ import { SlButton, SlCard, SlInput } from "@shoelace-style/shoelace/dist/react";
 
 export type CreateAgentProps = {
   isMyself?: boolean;
-  onCreated: (id: string) => void;
+  onCreated: (agent: { id: string, name: string }) => void;
 };
 
 const CreateAgent: React.FC<CreateAgentProps> = ({ isMyself, onCreated }) => {
@@ -31,17 +31,18 @@ const CreateAgent: React.FC<CreateAgentProps> = ({ isMyself, onCreated }) => {
         },
       },
     });
-    const id = response.data.createPerson.agent.id;
+    const agentId = response.data.createPerson.agent.id;
+    const agentName = response.data.createPerson.agent.name;
     // if isMyself
     // then also 'associateMyAgent'
     if (isMyself) {
       await associateMyAgent({
         variables: {
-          id,
+          id: agentId,
         },
       });
     }
-    onCreated(id);
+    onCreated({ id: agentId, name: agentName });
   };
 
   const handleSubmit = (e: any) => {

@@ -8,7 +8,7 @@ export type NewAgentProps = {};
 
 const NewAgent: React.FC<NewAgentProps> = ({}) => {
   const navigate = useNavigate();
-  const onCreated = (id: string) => {
+  const onCreated = (agent: { id: string, name: string }) => {
     navigate("/agents");
     window.location.reload();
   };

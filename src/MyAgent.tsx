@@ -4,16 +4,16 @@ import { WHO_AM_I } from "./graphql/queries";
 import RegisterMyself from "./components/RegisterMyself";
 import { useNavigate } from "react-router-dom";
 
-export type MyAgentIdProps = {
-  setMyAgentId: React.Dispatch<React.SetStateAction<string>>;
+export type MyAgentProps = {
+  setMyAgent: React.Dispatch<React.SetStateAction<{ id: string, name: string } | undefined>>;
 };
 
-const MyAgentId: React.FC<MyAgentIdProps> = ({ setMyAgentId }) => {
+const MyAgent: React.FC<MyAgentProps> = ({ setMyAgent }) => {
   const myAgentRequest = useQuery(WHO_AM_I);
   const navigate = useNavigate();
 
-  const onCreated = (id: string) => {
-    setMyAgentId(id);
+  const onCreated = (myAgent: { id: string, name: string }) => {
+    setMyAgent(myAgent);
     navigate("/resources");
   };
 
@@ -24,13 +24,17 @@ const MyAgentId: React.FC<MyAgentIdProps> = ({ setMyAgentId }) => {
       myAgentRequest.data
     ) {
       const myAgentId = myAgentRequest.data.myAgent.id;
-      setMyAgentId(myAgentId);
+      const myAgentName = myAgentRequest.data.myAgent.name;
+      setMyAgent({
+        id: myAgentId,
+        name: myAgentName
+      });
     }
   }, [
     myAgentRequest.data,
     myAgentRequest.error,
     myAgentRequest.loading,
-    setMyAgentId,
+    setMyAgent,
   ]);
 
   if (myAgentRequest.loading) return <div>Checking my identity...</div>;
@@ -39,4 +43,4 @@ const MyAgentId: React.FC<MyAgentIdProps> = ({ setMyAgentId }) => {
   return <></>;
 };
 
-export default MyAgentId;
+export default MyAgent;

@@ -21,6 +21,9 @@ const AgentListTableItem: React.FC<AgentListTableItemProps> = ({
       <div className="resource-list-resource-name">
         {agent.name} {agent.id === myAgentId ? "(me)" : ""}
       </div>
+
+      {/* Agent ID */}
+      <div>{agent.id.split(":")[0]}</div>
     </div>
   );
 };

@@ -25,6 +25,8 @@ const EconomicResourceList: React.FC<EconomicResourceListProps> = ({
       </div>
       {/* Name */}
       <div>Name</div>
+      {/* ID */}
+      <div>ID</div>
     </>
   );
   const listItems = data.agents.edges.map((agent: any) => (
@@ -34,7 +36,8 @@ const EconomicResourceList: React.FC<EconomicResourceListProps> = ({
       myAgentId={myAgentId}
     />
   ));
-  return <GeneralList headers={headers} listItems={listItems} />;
+  // <GeneralList dataTable />
+  return <></>;
 };
 
 export default EconomicResourceList;

@@ -20,7 +20,7 @@ const Header: React.FC<HeaderProps> = ({ name }) => {
 
       <div>
         <SlAvatar shape="circle" label="Circle avatar" />{" "}
-        {name ? name.slice(0, 8) + "..." : ""}
+        {name ? (name.length > 9 ? name.slice(0, 8) + "..." : name) : ""}
       </div>
     </div>
   );

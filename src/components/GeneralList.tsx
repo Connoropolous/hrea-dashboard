@@ -8,15 +8,14 @@ import {
 } from "@shoelace-style/shoelace/dist/react";
 
 export type GeneralListProps = {
-  headers: React.ReactElement;
-  listItems: React.ReactElement;
+  dataTable: React.ReactElement;
 };
 
-const GeneralList: React.FC<GeneralListProps> = ({ headers, listItems }) => {
+const GeneralList: React.FC<GeneralListProps> = ({ dataTable }) => {
   return (
-    <SlCard className="resource-list">
+    <SlCard className="general-list">
       {/* Header */}
-      <div className="resource-list-header">
+      <div className="general-list-header">
         <SlInput placeholder="Search..." clearable>
           <SlIcon name="search" slot="prefix"></SlIcon>
         </SlInput>
@@ -31,10 +30,8 @@ const GeneralList: React.FC<GeneralListProps> = ({ headers, listItems }) => {
         </SlButtonGroup>
       </div>
 
-      <div className="resource-list-table">
-        <div className="resource-list-table-header">{headers}</div>
-        {/* Data */}
-        <div>{listItems}</div>
+      <div className="data-table">
+        {dataTable}
       </div>
     </SlCard>
   );

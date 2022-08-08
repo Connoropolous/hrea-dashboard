@@ -3,7 +3,7 @@ import CreateAgent from "./CreateAgent";
 import MainPanelHeader from "./MainPanelHeader";
 
 export type RegisterMyselfProps = {
-  onCreated: (id: string) => void;
+  onCreated: (id: { id: string, name: string }) => void;
 };
 
 const RegisterMyself: React.FC<RegisterMyselfProps> = ({ onCreated }) => {

@@ -54,6 +54,7 @@ export const LIST_ECONOMIC_RESOURCES = gql`
           id
           primaryAccountable {
             id
+            name
           }
           accountingQuantity {
             hasNumericalValue

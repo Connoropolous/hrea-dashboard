@@ -12,13 +12,13 @@ const LeftScreenNavMenu: React.FC<LeftScreenNavMenuProps> = ({}) => {
   return (
     <div className="left-screen-nav-menu">
       <SlMenu>
-        <Link to="/resources">
+        <Link to="/resources" className="no-link-underline">
           <SlMenuItem value="Inventory">
             <SlIcon slot="prefix" name="minecart-loaded" />
             Resources
           </SlMenuItem>
         </Link>
-        <Link to="/agents">
+        <Link to="/agents" className="no-link-underline">
           <SlMenuItem value="Agents">
             Agents
             <SlIcon slot="prefix" name="people" />

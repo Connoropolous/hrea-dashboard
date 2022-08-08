@@ -1,6 +1,6 @@
 import React from "react";
 import { SlCheckbox } from "@shoelace-style/shoelace/dist/react";
-import ResourceListTableItem from "./ResourceListTableItem";
+import QuantityAdjust from "./QuantityAdjust";
 import { useQuery } from "@apollo/client";
 import { LIST_ECONOMIC_RESOURCES } from "../graphql/queries";
 import GeneralList from "./GeneralList";
@@ -17,34 +17,78 @@ const EconomicResourceList: React.FC<EconomicResourceListProps> = ({
   if (error) return <p>ERROR</p>;
   if (!data) return <p>Not found</p>;
 
-  const headers = (
+  const dataTable = (
     <>
-      {/* Checkbox */}
-      <div>
-        <SlCheckbox></SlCheckbox>
+      {/* Checkboxes */}
+      <div className="data-table-column">
+        {/* Checkbox */}
+        <div className="data-table-header">
+          <SlCheckbox></SlCheckbox>
+        </div>
+        {data.economicResources.edges.map((resource: any) => (
+          <div className="data-table-cell">
+            <SlCheckbox />
+          </div>
+        ))}
       </div>
-      {/* Image */}
-      <div></div>
-      {/* Name */}
-      <div>Resource</div>
-      {/* Type */}
-      {/* <div>Type</div> */}
 
-      {/* Agent */}
-      <div>Agent</div>
+      {/* Images */}
+      <div className="data-table-column">
+        {/* Image */}
+        <div className="data-table-header"></div>
+        {data.economicResources.edges.map((resource: any) => (
+          <div className="data-table-cell">
+            <div
+              style={{
+                width: "40px",
+                height: "40px",
+                background: `url(${resource.node.image})`,
+                backgroundSize: "contain",
+              }}
+            />
+          </div>
+        ))}
+      </div>
 
-      {/* Measure */}
-      <div>Measure</div>
+      {/* Names */}
+      <div className="data-table-column" style={{ flex: 2 }}>
+        {/* Name */}
+        <div className="data-table-header">Resource</div>
+        {data.economicResources.edges.map((resource: any) => (
+          <div className="data-table-cell data-table-bold">{resource.node.name}</div>
+        ))}
+      </div>
+
+      {/* Agents */}
+      <div className="data-table-column" style={{ flex: 1 }}>
+        {/* Agent */}
+        <div className="data-table-header">Agent</div>
+        {data.economicResources.edges.map((resource: any) => (
+          <div className="data-table-cell">
+            {resource.node.primaryAccountable.name.slice(0, 8) +
+              (resource.node.primaryAccountable.name.length > 9 ? "..." : "")}
+          </div>
+        ))}
+      </div>
+
+      {/* Measures */}
+      <div className="data-table-column" style={{ flex: 2 }}>
+        {/* Measure */}
+        <div className="data-table-header">Measure</div>
+        {data.economicResources.edges.map((resource: any) => (
+          <div className="data-table-cell">
+            <QuantityAdjust resource={resource.node} myAgentId={myAgentId} />
+          </div>
+        ))}
+      </div>
     </>
   );
-  const listItems = data.economicResources.edges.map((resource: any) => (
-    <ResourceListTableItem
-      key={resource.node.id}
-      resource={resource.node}
-      myAgentId={myAgentId}
-    />
-  ));
-  return <GeneralList headers={headers} listItems={listItems} />;
+  // {data.economicResources.edges.length === 0 && (
+  // <div style={{ textAlign: "center", marginTop: "1rem" }}>
+  // There are no resources yet. Use 'Add Resource' to add one.
+  // </div>
+  // )}
+  return <GeneralList dataTable={dataTable} />;
 };
 
 export default EconomicResourceList;
