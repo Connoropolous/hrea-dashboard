@@ -9,13 +9,17 @@ import {
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MainPanelHeader from "../components/MainPanelHeader";
-import { CREATE_ECONOMIC_EVENT, LIST_ECONOMIC_RESOURCES } from "../graphql/queries";
+import {
+  CREATE_ECONOMIC_EVENT,
+  LIST_ECONOMIC_RESOURCES,
+} from "../graphql/queries";
 
 export type ResourceTransferProps = {
   myAgentId: string;
 };
 
 const VALUE_SEPARATOR = "__SEPARATOR__";
+const VALUE_SEPARATOR_2 = "__SEPARATOR_2__";
 
 export type ResourceListProps = {
   resources: any[];
@@ -24,11 +28,20 @@ const ResourceList: React.FC<ResourceListProps> = ({ resources }) => {
   return (
     <>
       {resources.map((eR: any) => {
-        const value = `${eR.node.primaryAccountable.id}${VALUE_SEPARATOR}${eR.node.id}`;
+        const unitId = eR.node.accountingQuantity.hasUnit
+          ? eR.node.accountingQuantity.hasUnit.id
+          : "";
+        const value = `${eR.node.primaryAccountable.id}${VALUE_SEPARATOR}${eR.node.id}${VALUE_SEPARATOR_2}${unitId}`;
         return (
-          <SlMenuItem key={value} value={value} className="resource-select-menu-item">
-            {eR.node.name}
-            <div slot="suffix">{eR.node.accountingQuantity.hasNumericalValue}</div>
+          <SlMenuItem
+            key={value}
+            value={value}
+            className="resource-select-menu-item"
+          >
+            {eR.node.name} ({eR.node.primaryAccountable.name.slice(0, 5)}...)
+            <div slot="suffix">
+              {eR.node.accountingQuantity.hasNumericalValue}
+            </div>
           </SlMenuItem>
         );
       })}
@@ -53,8 +66,14 @@ const ResourceTransfer: React.FC<ResourceTransferProps> = ({ myAgentId }) => {
     if (!from || !to || typeof quantity === "undefined") {
       return;
     }
-    const [fromAgentId, fromResourceId] = from.split(VALUE_SEPARATOR);
-    const [toAgentId, toResourceId] = to.split(VALUE_SEPARATOR);
+    const [fromAgentId] = from.split(VALUE_SEPARATOR);
+    const [toAgentId] = to.split(VALUE_SEPARATOR);
+    const [fromResourceId, fromUnitId] = from
+      .replace(fromAgentId + VALUE_SEPARATOR, "")
+      .split(VALUE_SEPARATOR_2);
+    const [toResourceId, toUnitId] = to
+      .replace(toAgentId + VALUE_SEPARATOR, "")
+      .split(VALUE_SEPARATOR_2);
     await createEE({
       variables: {
         event: {
@@ -63,7 +82,11 @@ const ResourceTransfer: React.FC<ResourceTransferProps> = ({ myAgentId }) => {
           receiver: toAgentId,
           resourceInventoriedAs: fromResourceId,
           toResourceInventoriedAs: toResourceId,
-          resourceQuantity: { hasNumericalValue: quantity },
+          resourceQuantity: {
+            hasNumericalValue: quantity,
+            // just use the fromUnitId (it will error if they're not the same)
+            hasUnit: fromUnitId.length ? fromUnitId : null,
+          },
           // resourceClassifiedAs: "https://something",
           hasPointInTime: new Date(),
         },
@@ -99,13 +122,13 @@ const ResourceTransfer: React.FC<ResourceTransferProps> = ({ myAgentId }) => {
               label="From"
               onSlChange={(e) => {
                 // @ts-ignore
-                console.log(e.target.value);
-                // @ts-ignore
                 setFrom(e.target.value);
               }}
             >
               {resources.data.economicResources.edges && (
-                <ResourceList resources={resources.data.economicResources.edges} />
+                <ResourceList
+                  resources={resources.data.economicResources.edges}
+                />
               )}
             </SlSelect>
             <br />
@@ -116,7 +139,9 @@ const ResourceTransfer: React.FC<ResourceTransferProps> = ({ myAgentId }) => {
               onSlChange={(e) => setTo(e.target.value)}
             >
               {resources.data.economicResources.edges && (
-                <ResourceList resources={resources.data.economicResources.edges} />
+                <ResourceList
+                  resources={resources.data.economicResources.edges}
+                />
               )}
             </SlSelect>
             <br />

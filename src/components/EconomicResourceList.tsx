@@ -74,7 +74,7 @@ const EconomicResourceList: React.FC<EconomicResourceListProps> = ({
       {/* Measures */}
       <div className="data-table-column" style={{ flex: 2 }}>
         {/* Measure */}
-        <div className="data-table-header">Measure</div>
+        <div className="data-table-header">Quantity</div>
         {data.economicResources.edges.map((resource: any) => (
           <div className="data-table-cell">
             <QuantityAdjust resource={resource.node} myAgentId={myAgentId} />

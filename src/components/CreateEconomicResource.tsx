@@ -64,7 +64,10 @@ const CreateEconomicResource: React.FC<CreateEconomicResourceProps> = ({
           action: "raise",
           provider: forAgent,
           receiver: forAgent,
-          resourceQuantity: { hasNumericalValue: quantity },
+          resourceQuantity: {
+            hasNumericalValue: quantity,
+            hasUnit: unit,
+          },
           resourceClassifiedAs: "https://something",
           hasPointInTime: new Date(),
         },
@@ -84,8 +87,6 @@ const CreateEconomicResource: React.FC<CreateEconomicResourceProps> = ({
       create();
     }
   };
-
-  console.log('unitData', unitData)
 
   return (
     <SlCard className="create-form">

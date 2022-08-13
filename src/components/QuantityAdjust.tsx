@@ -39,7 +39,12 @@ const QuantityAdjust: React.FC<QuantityAdjustProps> = ({
           action: quantityAdjustment > 0 ? "raise" : "lower",
           provider: myAgentId,
           receiver: myAgentId,
-          resourceQuantity: { hasNumericalValue: Math.abs(quantityAdjustment) },
+          resourceQuantity: {
+            hasNumericalValue: Math.abs(quantityAdjustment),
+            hasUnit: resource.accountingQuantity.hasUnit
+              ? resource.accountingQuantity.hasUnit.id
+              : null,
+          },
           resourceInventoriedAs: resource.id,
           hasPointInTime: new Date(),
         },
@@ -61,8 +66,11 @@ const QuantityAdjust: React.FC<QuantityAdjustProps> = ({
             setQuantityAbsolute(absolute);
             setQuantityAdjustment(adjustment);
           }}
-        ></SlInput>
+        />
       </div>
+      {resource.accountingQuantity.hasUnit && (
+        <div>{resource.accountingQuantity.hasUnit.symbol}</div>
+      )}
       <SlDropdown>
         <SlIconButton slot="trigger" name="sliders"></SlIconButton>
         <SlMenu>

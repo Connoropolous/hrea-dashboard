@@ -58,9 +58,18 @@ export const LIST_ECONOMIC_RESOURCES = gql`
           }
           accountingQuantity {
             hasNumericalValue
+            hasUnit {
+              id
+              label
+              symbol
+            }
           }
           onhandQuantity {
             hasNumericalValue
+            hasUnit {
+              label
+              symbol
+            }
           }
           image
           name
@@ -115,6 +124,9 @@ export const UPDATE_ECONOMIC_RESOURCES = gql`
           id
           accountingQuantity {
             hasNumericalValue
+            hasUnit {
+              id
+            }
           }
         }
       }
