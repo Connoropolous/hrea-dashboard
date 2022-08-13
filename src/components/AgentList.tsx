@@ -1,6 +1,5 @@
 import React from "react";
 import { SlCheckbox } from "@shoelace-style/shoelace/dist/react";
-import AgentListTableItem from "./AgentListTableItem";
 import { useQuery } from "@apollo/client";
 import { LIST_AGENTS } from "../graphql/queries";
 import GeneralList from "./GeneralList";
@@ -17,27 +16,43 @@ const EconomicResourceList: React.FC<EconomicResourceListProps> = ({
   if (error) return <p>ERROR</p>;
   if (!data) return <p>Not found</p>;
 
-  const headers = (
+  const dataTable = (
     <>
-      {/* Checkbox */}
-      <div>
-        <SlCheckbox></SlCheckbox>
+      {/* Checkboxes */}
+      <div className="data-table-column">
+        {/* Checkbox */}
+        <div className="data-table-header">
+          <SlCheckbox></SlCheckbox>
+        </div>
+        {data.agents.edges.map((agent: any) => (
+          <div className="data-table-cell">
+            <SlCheckbox />
+          </div>
+        ))}
       </div>
-      {/* Name */}
-      <div>Name</div>
+
+      {/* Names */}
+      <div className="data-table-column" style={{ flex: 1 }}>
+        {/* Name */}
+        <div className="data-table-header">Name</div>
+        {data.agents.edges.map((agent: any) => (
+          <div className="data-table-cell data-table-bold">
+            {agent.node.name} {agent.node.id === myAgentId ? "(me)" : ""}
+          </div>
+        ))}
+      </div>
+
       {/* ID */}
-      <div>ID</div>
+      <div className="data-table-column">
+        {/* Name */}
+        <div className="data-table-header">ID</div>
+        {data.agents.edges.map((agent: any) => (
+          <div className="data-table-cell">{agent.node.id.split(":")[0]}</div>
+        ))}
+      </div>
     </>
   );
-  const listItems = data.agents.edges.map((agent: any) => (
-    <AgentListTableItem
-      key={agent.node.id}
-      agent={agent.node}
-      myAgentId={myAgentId}
-    />
-  ));
-  // <GeneralList dataTable />
-  return <></>;
+  return <GeneralList dataTable={dataTable} />;
 };
 
 export default EconomicResourceList;
