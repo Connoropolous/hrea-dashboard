@@ -1,7 +1,17 @@
-import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
-import { CREATE_ECONOMIC_RESOURCES } from "../graphql/queries";
-import { SlButton, SlCard, SlInput } from "@shoelace-style/shoelace/dist/react";
+import React, { useEffect, useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import {
+  CREATE_ECONOMIC_RESOURCES,
+  LIST_AGENTS,
+  LIST_UNITS,
+} from "../graphql/queries";
+import {
+  SlButton,
+  SlCard,
+  SlInput,
+  SlMenuItem,
+  SlSelect,
+} from "@shoelace-style/shoelace/dist/react";
 import { useNavigate } from "react-router-dom";
 
 export type CreateEconomicResourceProps = {
@@ -12,25 +22,47 @@ const CreateEconomicResource: React.FC<CreateEconomicResourceProps> = ({
   myAgentId,
 }) => {
   const navigate = useNavigate();
+
+  // data needed
+  const {
+    data: unitData,
+    loading: unitLoading,
+    error: unitError,
+  } = useQuery(LIST_UNITS);
+  const {
+    data: agentData,
+    loading: agentLoading,
+    error: agentError,
+  } = useQuery(LIST_AGENTS);
+
   const [createER, createERmutationStatus] = useMutation(
     CREATE_ECONOMIC_RESOURCES
   );
 
   const [image, setImage] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [forAgent, setForAgent] = useState(myAgentId);
   const [resourceName, setResourceName] = useState("");
+
+  useEffect(() => {
+    setForAgent(myAgentId)
+  }, [myAgentId])
+
+  if (unitLoading || agentLoading) return <div>Loading...</div>;
+  if (unitError) return <p>ERROR loading units</p>;
+  if (agentError) return <p>ERROR loading agents</p>;
 
   if (createERmutationStatus.loading)
     return <div>Creating economic resource...</div>;
-  if (createERmutationStatus.error) return <p>ERROR</p>;
+  if (createERmutationStatus.error) return <p>ERROR during creation</p>;
 
   const create = async () => {
     await createER({
       variables: {
         event: {
           action: "raise",
-          provider: myAgentId,
-          receiver: myAgentId,
+          provider: forAgent,
+          receiver: forAgent,
           resourceQuantity: { hasNumericalValue: quantity },
           resourceClassifiedAs: "https://something",
           hasPointInTime: new Date(),
@@ -74,6 +106,25 @@ const CreateEconomicResource: React.FC<CreateEconomicResourceProps> = ({
           value={quantity.toString()}
         />
         {/* TODO: specify units here optionally */}
+        <br />
+        <SlSelect
+          // required
+          label="Agent"
+          onSlChange={(e) => {
+            // @ts-ignore
+            setForAgent(e.target.value);
+          }}
+          value={forAgent}
+        >
+          {agentData.agents.edges.map((agent: any) => {
+            const value = agent.node.id;
+            return (
+              <SlMenuItem key={value} value={value}>
+                {agent.node.name} {agent.node.id === myAgentId ? '(me)' : ''}
+              </SlMenuItem>
+            );
+          })}
+        </SlSelect>
         <br />
         <SlInput
           required

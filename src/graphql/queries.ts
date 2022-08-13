@@ -83,6 +83,19 @@ export const LIST_AGENTS = gql`
   }
 `;
 
+export const LIST_UNITS = gql`
+  query ListUnits {
+    units {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
 export const CREATE_ECONOMIC_EVENT = gql`
   mutation CreateEconomicResource($event: EconomicEventCreateParams!) {
     createEconomicEvent(event: $event) {
