@@ -41,12 +41,13 @@ const CreateEconomicResource: React.FC<CreateEconomicResourceProps> = ({
 
   const [image, setImage] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [unit, setUnit] = useState();
   const [forAgent, setForAgent] = useState(myAgentId);
   const [resourceName, setResourceName] = useState("");
 
   useEffect(() => {
-    setForAgent(myAgentId)
-  }, [myAgentId])
+    setForAgent(myAgentId);
+  }, [myAgentId]);
 
   if (unitLoading || agentLoading) return <div>Loading...</div>;
   if (unitError) return <p>ERROR loading units</p>;
@@ -84,6 +85,8 @@ const CreateEconomicResource: React.FC<CreateEconomicResourceProps> = ({
     }
   };
 
+  console.log('unitData', unitData)
+
   return (
     <SlCard className="create-form">
       <form onSubmit={handleSubmit}>
@@ -97,15 +100,34 @@ const CreateEconomicResource: React.FC<CreateEconomicResourceProps> = ({
           value={resourceName}
         />
         <br />
-        <SlInput
-          required
-          type="number"
-          label="Initial Balance"
-          // @ts-ignore
-          onSlChange={(e) => setQuantity(+e.target.value)}
-          value={quantity.toString()}
-        />
-        {/* TODO: specify units here optionally */}
+        <div className="resource-balance-and-units">
+          <SlInput
+            required
+            type="number"
+            label="Initial Balance"
+            // @ts-ignore
+            onSlChange={(e) => setQuantity(+e.target.value)}
+            value={quantity.toString()}
+          />
+          <SlSelect
+            // required
+            label="Units"
+            onSlChange={(e) => {
+              // @ts-ignore
+              setUnit(e.target.value);
+            }}
+            value={unit}
+          >
+            {unitData.units.edges.map((unit: any) => {
+              const value = unit.node.id;
+              return (
+                <SlMenuItem key={value} value={value}>
+                  {unit.node.symbol}
+                </SlMenuItem>
+              );
+            })}
+          </SlSelect>
+        </div>
         <br />
         <SlSelect
           // required
@@ -120,7 +142,7 @@ const CreateEconomicResource: React.FC<CreateEconomicResourceProps> = ({
             const value = agent.node.id;
             return (
               <SlMenuItem key={value} value={value}>
-                {agent.node.name} {agent.node.id === myAgentId ? '(me)' : ''}
+                {agent.node.name} {agent.node.id === myAgentId ? "(me)" : ""}
               </SlMenuItem>
             );
           })}

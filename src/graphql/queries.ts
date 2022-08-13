@@ -89,7 +89,8 @@ export const LIST_UNITS = gql`
       edges {
         node {
           id
-          name
+          label
+          symbol
         }
       }
     }

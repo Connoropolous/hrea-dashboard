@@ -103,12 +103,6 @@
   border-bottom: 0.0625rem solid var(--border);
 }
 
-/* .resource-list-table-header > div,
-.resource-list-table-item > div {
-  box-sizing: border-box;
-  padding: var(--sl-spacing-small);
-} */
-
 .resource-list-resource-quantity {
   margin-right: var(--sl-spacing-small);
 }
@@ -130,4 +124,12 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+/* Create Resource */
+
+.resource-balance-and-units {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
