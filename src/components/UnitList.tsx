@@ -1,18 +1,16 @@
 import React from "react";
 import { SlCheckbox } from "@shoelace-style/shoelace/dist/react";
 import { useQuery } from "@apollo/client";
-import { LIST_AGENTS } from "../graphql/queries";
+import { LIST_UNITS } from "../graphql/queries";
 import GeneralList from "./GeneralList";
 
-export type AgentListProps = {
+export type UnitListProps = {
   myAgentId: string;
 };
 
-const AgentList: React.FC<AgentListProps> = ({
-  myAgentId,
-}) => {
-  const { data, loading, error } = useQuery(LIST_AGENTS);
-  if (loading) return <div>Listing economic resources...</div>;
+const UnitList: React.FC<UnitListProps> = ({ myAgentId }) => {
+  const { data, loading, error } = useQuery(LIST_UNITS);
+  if (loading) return <div>Listing units...</div>;
   if (error) return <p>ERROR</p>;
   if (!data) return <p>Not found</p>;
 
@@ -24,30 +22,30 @@ const AgentList: React.FC<AgentListProps> = ({
         <div className="data-table-header">
           <SlCheckbox></SlCheckbox>
         </div>
-        {data.agents.edges.map((agent: any) => (
+        {data.units.edges.map((agent: any) => (
           <div className="data-table-cell">
             <SlCheckbox />
           </div>
         ))}
       </div>
 
-      {/* Names */}
+      {/* Label */}
       <div className="data-table-column" style={{ flex: 1 }}>
-        {/* Name */}
-        <div className="data-table-header">Name</div>
-        {data.agents.edges.map((agent: any) => (
+        {/* Label */}
+        <div className="data-table-header">Label</div>
+        {data.units.edges.map((unit: any) => (
           <div className="data-table-cell data-table-bold">
-            {agent.node.name} {agent.node.id === myAgentId ? "(me)" : ""}
+            {unit.node.label}
           </div>
         ))}
       </div>
 
-      {/* ID */}
-      <div className="data-table-column">
-        {/* ID */}
-        <div className="data-table-header">ID</div>
-        {data.agents.edges.map((agent: any) => (
-          <div className="data-table-cell">{agent.node.id.split(":")[0]}</div>
+      {/* Symbol */}
+      <div className="data-table-column" style={{ flex: 1 }}>
+        {/* Symbol */}
+        <div className="data-table-header">Symbol</div>
+        {data.units.edges.map((unit: any) => (
+          <div className="data-table-cell">{unit.node.symbol}</div>
         ))}
       </div>
     </>
@@ -55,4 +53,4 @@ const AgentList: React.FC<AgentListProps> = ({
   return <GeneralList dataTable={dataTable} />;
 };
 
-export default AgentList;
+export default UnitList;

@@ -24,6 +24,12 @@ const LeftScreenNavMenu: React.FC<LeftScreenNavMenuProps> = ({}) => {
             <SlIcon slot="prefix" name="people" />
           </SlMenuItem>
         </Link>
+        <Link to="/units" className="no-link-underline">
+          <SlMenuItem value="Units">
+            Units
+            <SlIcon slot="prefix" name="thermometer-half" />
+          </SlMenuItem>
+        </Link>
       </SlMenu>
     </div>
   );

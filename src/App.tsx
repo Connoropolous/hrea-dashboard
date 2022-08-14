@@ -15,6 +15,8 @@ import NewResource from './routes/NewResource'
 import ResourceTransfer from './routes/ResourceTransfer'
 import Agents from './routes/Agents'
 import RegisterOtherAgent from './routes/RegisterOtherAgent'
+import Units from './routes/Units'
+import NewUnit from './routes/NewUnit'
 
 setBasePath(
   'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.70/dist/'
@@ -76,6 +78,14 @@ const App: React.FC<Props> = () => {
                 <Route
                   path='/agents/register_other'
                   element={<RegisterOtherAgent />}
+                />
+                <Route
+                  path='/units'
+                  element={<Units myAgentId={myAgentId} />}
+                />
+                <Route
+                  path='/units/new'
+                  element={<NewUnit myAgentId={myAgentId} />}
                 />
               </Routes>
             </ApolloProvider>
