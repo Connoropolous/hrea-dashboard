@@ -8,6 +8,7 @@ import {
 } from "@shoelace-style/shoelace/dist/react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import MainPanelHeader from "../components/MainPanelHeader";
 import {
   CREATE_ECONOMIC_EVENT,
@@ -58,6 +59,14 @@ const ResourceTransfer: React.FC<ResourceTransferProps> = ({ myAgentId }) => {
   const [to, setTo] = useState<string>("");
   const [quantity, setQuantity] = useState();
 
+  const today = new Date();
+  const month = ("0" + (today.getUTCMonth() + 1)).slice(-2);
+  const day = ("0" + today.getUTCDate()).slice(-2);
+  const [date, setDate] = useState(`${today.getUTCFullYear()}-${month}-${day}`);
+  const hours = ("0" + today.getUTCHours()).slice(-2);
+  const minutes = ("0" + today.getUTCMinutes()).slice(-2);
+  const [time, setTime] = useState(`${hours}:${minutes}`);
+
   if (createEEmutationStatus.loading)
     return <div>Creating economic resource...</div>;
   if (createEEmutationStatus.error) return <p>ERROR</p>;
@@ -88,7 +97,8 @@ const ResourceTransfer: React.FC<ResourceTransferProps> = ({ myAgentId }) => {
             hasUnit: fromUnitId.length ? fromUnitId : null,
           },
           // resourceClassifiedAs: "https://something",
-          hasPointInTime: new Date(),
+          // formatted as ISO
+          hasPointInTime: `${date}T${time}:00.00Z`,
         },
       },
     });
@@ -101,6 +111,7 @@ const ResourceTransfer: React.FC<ResourceTransferProps> = ({ myAgentId }) => {
     create();
   };
 
+  console.log(date);
   return (
     <>
       <MainPanelHeader>
@@ -154,7 +165,28 @@ const ResourceTransfer: React.FC<ResourceTransferProps> = ({ myAgentId }) => {
               // @ts-ignore
               value={quantity ? quantity.toString() : ""}
             />
-            {/* TODO: specify units here optionally */}
+            <br />
+            <SlInput
+              required
+              type="date"
+              label="Date"
+              onSlChange={(e) => {
+                // @ts-ignore
+                setDate(e.target.value);
+              }}
+              value={date}
+            />
+            <br />
+            <SlInput
+              required
+              type="time"
+              label="Time (UTC)"
+              onSlChange={(e) => {
+                // @ts-ignore
+                setTime(e.target.value);
+              }}
+              value={time}
+            />
             <br />
             <SlButton type="submit" variant="primary">
               Transfer
