@@ -111,7 +111,7 @@ const CreateEconomicResource: React.FC<CreateEconomicResourceProps> = ({
             value={quantity.toString()}
           />
           <SlSelect
-            // required
+            clearable
             label="Units"
             onSlChange={(e) => {
               // @ts-ignore
