@@ -41,7 +41,7 @@ const ResourceList: React.FC<ResourceListProps> = ({ resources }) => {
           >
             {eR.node.name} ({eR.node.primaryAccountable.name.slice(0, 5)}...)
             <div slot="suffix">
-              {eR.node.accountingQuantity.hasNumericalValue}
+              {eR.node.accountingQuantity.hasNumericalValue} {eR.node.accountingQuantity.hasUnit.symbol}
             </div>
           </SlMenuItem>
         );
