@@ -9,6 +9,7 @@
 /coverage
 
 # production
+web-happ/*.webhapp
 /build
 ui.zip
 
