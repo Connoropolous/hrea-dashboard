@@ -8,12 +8,9 @@ export type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({ name }) => {
   return (
     <div className="header">
-      <SlAvatar
-        image="https://avatars.githubusercontent.com/u/46187479?s=200&v=4"
-        label="Avatar of a gray tabby kitten looking down"
-      />
+      <img alt="" src="https://avatars.githubusercontent.com/u/46187479?s=48&v=4" />
       <div className="search">
-        <SlInput placeholder="Search..." clearable>
+        <SlInput placeholder="Search..." clearable disabled>
           <SlIcon name="search" slot="prefix"></SlIcon>{" "}
         </SlInput>
       </div>

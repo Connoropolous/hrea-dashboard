@@ -22,11 +22,11 @@ const AgentList: React.FC<AgentListProps> = ({
       <div className="data-table-column">
         {/* Checkbox */}
         <div className="data-table-header">
-          <SlCheckbox></SlCheckbox>
+          <SlCheckbox disabled></SlCheckbox>
         </div>
         {data.agents.edges.map((agent: any) => (
           <div className="data-table-cell">
-            <SlCheckbox />
+            <SlCheckbox disabled />
           </div>
         ))}
       </div>

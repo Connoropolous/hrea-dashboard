@@ -23,11 +23,11 @@ const EconomicResourceList: React.FC<EconomicResourceListProps> = ({
       <div className="data-table-column">
         {/* Checkbox */}
         <div className="data-table-header">
-          <SlCheckbox></SlCheckbox>
+          <SlCheckbox disabled></SlCheckbox>
         </div>
         {data.economicResources.edges.map((resource: any) => (
           <div className="data-table-cell">
-            <SlCheckbox />
+            <SlCheckbox disabled />
           </div>
         ))}
       </div>

@@ -20,11 +20,11 @@ const UnitList: React.FC<UnitListProps> = ({ myAgentId }) => {
       <div className="data-table-column">
         {/* Checkbox */}
         <div className="data-table-header">
-          <SlCheckbox></SlCheckbox>
+          <SlCheckbox disabled></SlCheckbox>
         </div>
         {data.units.edges.map((agent: any) => (
           <div className="data-table-cell">
-            <SlCheckbox />
+            <SlCheckbox disabled />
           </div>
         ))}
       </div>

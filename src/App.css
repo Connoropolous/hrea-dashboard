@@ -101,6 +101,7 @@
 .data-table-header,
 .data-table-cell {
   border-bottom: 0.0625rem solid var(--border);
+  /* padding: 0 var(--sl-spacing-small); */
 }
 
 .resource-list-resource-quantity {

@@ -18,26 +18,29 @@ export const LIST_ECONOMIC_EVENTS = gql`
           action {
             id
           }
+          hasPointInTime
+          resourceQuantity {
+            hasNumericalValue
+            hasUnit {
+              id
+              label
+              symbol
+            }
+          }
           provider {
             id
+            name
           }
           receiver {
             id
+            name
           }
           resourceInventoriedAs {
             id
-            accountingQuantity {
-              hasNumericalValue
-              hasUnit {
-                id
-                label
-                symbol
-              }
-            }
-            onhandQuantity {
-              hasNumericalValue
-            }
-            image
+            name
+          }
+          toResourceInventoriedAs {
+            id
             name
           }
         }

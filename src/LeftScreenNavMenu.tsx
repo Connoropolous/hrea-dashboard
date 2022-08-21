@@ -18,6 +18,12 @@ const LeftScreenNavMenu: React.FC<LeftScreenNavMenuProps> = ({}) => {
             Resources
           </SlMenuItem>
         </Link>
+        <Link to="/events" className="no-link-underline">
+          <SlMenuItem value="Events">
+            Events
+            <SlIcon slot="prefix" name="calendar-event" />
+          </SlMenuItem>
+        </Link>
         <Link to="/agents" className="no-link-underline">
           <SlMenuItem value="Agents">
             Agents

@@ -16,15 +16,15 @@ const GeneralList: React.FC<GeneralListProps> = ({ dataTable }) => {
     <SlCard className="general-list">
       {/* Header */}
       <div className="general-list-header">
-        <SlInput placeholder="Search..." clearable>
+        <SlInput placeholder="Search..." clearable disabled>
           <SlIcon name="search" slot="prefix"></SlIcon>
         </SlInput>
         <SlButtonGroup>
-          <SlButton>
+          <SlButton disabled>
             <SlIcon name="filter-circle" slot="prefix"></SlIcon>
             Filter
           </SlButton>
-          <SlButton>
+          <SlButton disabled>
             <SlIcon name="sort-down" slot="prefix"></SlIcon>Sort
           </SlButton>
         </SlButtonGroup>
